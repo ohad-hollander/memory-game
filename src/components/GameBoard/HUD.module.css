@@ -1,0 +1,71 @@
+/* src/components/GameBoard/HUD.module.css */
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-radius: 16px;
+  padding: 10px 16px;
+  box-shadow: var(--shadow-sm);
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+  min-width: 44px;
+}
+
+.val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--purple);
+  line-height: 1;
+}
+
+.lbl {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.hintBtn {
+  background: linear-gradient(135deg, #fce7f3, #ede9fe);
+  border: 1.5px solid var(--pink-light);
+  border-radius: 50px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--pink);
+  transition: opacity 0.2s;
+}
+
+.hintBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.iconBtn {
+  background: white;
+  border: 1.5px solid #e9d5ff;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.iconBtn:hover { background: #fdf4ff; }
+
+@media (max-width: 400px) {
+  .val { font-size: 0.95rem; }
+  .hintBtn { padding: 5px 10px; font-size: 0.72rem; }
+}

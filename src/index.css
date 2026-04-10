@@ -1,0 +1,61 @@
+/* src/index.css */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-gradient: linear-gradient(160deg, #fdf4ff 0%, #fce7f3 50%, #eff6ff 100%);
+  --purple:      #7c3aed;
+  --purple-light:#a78bfa;
+  --pink:        #ec4899;
+  --pink-light:  #f9a8d4;
+  --text:        #1e1b4b;
+  --text-muted:  #9ca3af;
+  --card-radius: 14px;
+  --shadow-sm:   0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.12);
+  --shadow-lg:   0 8px 32px rgba(0,0,0,0.16);
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text);
+  min-height: 100svh;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+input {
+  font-family: inherit;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  :root { --card-radius: 10px; }
+}
+
+/* Prevent scroll bounce on iOS */
+html { overflow: hidden; height: 100%; }
+body { overflow-y: auto; height: 100%; -webkit-overflow-scrolling: touch; }
+
+/* Better tap targets on mobile */
+@media (pointer: coarse) {
+  button { min-height: 44px; }
+}
+
+/* Focus ring for keyboard users */
+button:focus-visible {
+  outline: 3px solid var(--purple-light);
+  outline-offset: 2px;
+}

@@ -1,0 +1,16 @@
+/* src/components/GameBoard/ProgressBar.module.css */
+.wrap { width: 100%; padding: 0 4px; }
+
+.track {
+  height: 8px;
+  background: #e9d5ff;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, #a78bfa, #ec4899);
+  border-radius: 50px;
+  transition: width 0.4s ease;
+}
