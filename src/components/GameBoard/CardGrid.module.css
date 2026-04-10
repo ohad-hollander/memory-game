@@ -1,0 +1,15 @@
+/* src/components/GameBoard/CardGrid.module.css */
+.grid {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Easy/Medium: 4 cols */
+.cols4 { grid-template-columns: repeat(4, 1fr); }
+/* Hard: 6 cols */
+.cols6 { grid-template-columns: repeat(6, 1fr); }
+
+@media (max-width: 480px) {
+  .cols6 { gap: 5px; }
+}

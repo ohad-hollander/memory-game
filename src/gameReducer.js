@@ -157,6 +157,12 @@ export function gameReducer(state, action) {
     case 'TOGGLE_MUTE':
       return { ...state, isMuted: !state.isMuted }
 
+    case 'SET_PLAYERS':
+      return { ...state, players: action.players }
+
+    case 'RESTORE':
+      return { ...action.state }
+
     default:
       return state
   }
