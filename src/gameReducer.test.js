@@ -190,6 +190,80 @@ describe('gameReducer', () => {
     })
   })
 
+  describe('USE_HINT', () => {
+    const getGameState = () => {
+      const cards = buildCards(makePhotos(8), 'easy').map(c => ({ ...c, isFlipped: false }))
+      return { ...initialState, screen: 'game', cards, totalPairs: 8 }
+    }
+
+    it('flips the hinted cards face-up', () => {
+      const state = getGameState()
+      const hintIds = [state.cards[0].id, state.cards[1].id]
+      const next = gameReducer(state, { type: 'USE_HINT', ids: hintIds })
+      hintIds.forEach(id => expect(next.cards.find(c => c.id === id).isFlipped).toBe(true))
+    })
+
+    it('adds 2 to moves', () => {
+      const state = getGameState()
+      const hintIds = [state.cards[0].id, state.cards[1].id]
+      const next = gameReducer(state, { type: 'USE_HINT', ids: hintIds })
+      expect(next.moves).toBe(2)
+    })
+
+    it('increments hintsUsed by 1', () => {
+      const state = getGameState()
+      const hintIds = [state.cards[0].id, state.cards[1].id]
+      const next = gameReducer(state, { type: 'USE_HINT', ids: hintIds })
+      expect(next.hintsUsed).toBe(1)
+    })
+
+    it('sets isEvaluating to true', () => {
+      const state = getGameState()
+      const hintIds = [state.cards[0].id, state.cards[1].id]
+      const next = gameReducer(state, { type: 'USE_HINT', ids: hintIds })
+      expect(next.isEvaluating).toBe(true)
+    })
+  })
+
+  describe('HINT_DONE', () => {
+    const getHintState = () => {
+      const cards = buildCards(makePhotos(8), 'easy').map(c => ({ ...c, isFlipped: false }))
+      const hintIds = [cards[0].id, cards[1].id]
+      return {
+        state: { ...initialState, screen: 'game', cards, totalPairs: 8, isEvaluating: true },
+        hintIds,
+      }
+    }
+
+    it('flips non-matched hinted cards back face-down', () => {
+      const { state, hintIds } = getHintState()
+      const withFlipped = {
+        ...state,
+        cards: state.cards.map(c => hintIds.includes(c.id) ? { ...c, isFlipped: true } : c),
+      }
+      const next = gameReducer(withFlipped, { type: 'HINT_DONE', ids: hintIds })
+      hintIds.forEach(id => expect(next.cards.find(c => c.id === id).isFlipped).toBe(false))
+    })
+
+    it('leaves matched cards face-up even if in ids', () => {
+      const { state, hintIds } = getHintState()
+      const withMatchedFlipped = {
+        ...state,
+        cards: state.cards.map(c =>
+          hintIds.includes(c.id) ? { ...c, isFlipped: true, isMatched: true } : c
+        ),
+      }
+      const next = gameReducer(withMatchedFlipped, { type: 'HINT_DONE', ids: hintIds })
+      hintIds.forEach(id => expect(next.cards.find(c => c.id === id).isFlipped).toBe(true))
+    })
+
+    it('sets isEvaluating to false', () => {
+      const { state, hintIds } = getHintState()
+      const next = gameReducer(state, { type: 'HINT_DONE', ids: hintIds })
+      expect(next.isEvaluating).toBe(false)
+    })
+  })
+
   describe('TOGGLE_MUTE', () => {
     it('toggles isMuted', () => {
       expect(gameReducer(initialState, { type: 'TOGGLE_MUTE' }).isMuted).toBe(true)
