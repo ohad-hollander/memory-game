@@ -79,10 +79,16 @@
 
 .btnSecondary:hover { background: #fdf4ff; }
 
+.bestScores {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+}
+
 .bestScore {
   font-size: 0.78rem;
   color: var(--purple-light);
-  margin-top: 4px;
 }
 
 .resumeBox {

@@ -1,4 +1,5 @@
 // src/components/GameBoard/HUD.jsx
+import { useEffect, useRef } from 'react'
 import { DIFFICULTY_CONFIG } from '../../constants'
 import styles from './HUD.module.css'
 
@@ -22,13 +23,18 @@ export default function HUD({ state, dispatch, play, isFullscreen, toggleFullscr
   const { difficulty, moves, elapsedSeconds, pairsFound, totalPairs, isEvaluating, isMuted, players, activePlayer } = state
   const { countdown } = DIFFICULTY_CONFIG[difficulty]
 
+  const hintTimer = useRef(null)
+
   function handleHint() {
     const pair = findHintPair(state.cards)
     if (!pair) return
     play('match')
     dispatch({ type: 'USE_HINT', ids: pair })
-    setTimeout(() => dispatch({ type: 'HINT_DONE', ids: pair }), 1500)
+    if (hintTimer.current) clearTimeout(hintTimer.current)
+    hintTimer.current = setTimeout(() => dispatch({ type: 'HINT_DONE', ids: pair }), 1500)
   }
+
+  useEffect(() => () => { if (hintTimer.current) clearTimeout(hintTimer.current) }, [])
 
   const is2P = players.length > 1
 

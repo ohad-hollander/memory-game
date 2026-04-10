@@ -35,7 +35,7 @@ export default function DifficultyScreen({ state, dispatch, photos }) {
           </button>
         ))}
       </div>
-      <button className={styles.btnBack} onClick={() => dispatch({ type: 'NAVIGATE', screen: 'home' })}>
+      <button className={styles.btnBack} onClick={() => dispatch({ type: 'NAVIGATE', screen: state.players.length > 1 ? 'setup' : 'home' })}>
         ← Back
       </button>
     </div>

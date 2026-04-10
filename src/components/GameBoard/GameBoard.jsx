@@ -1,6 +1,6 @@
 // src/components/GameBoard/GameBoard.jsx
 import { useEffect, useRef } from 'react'
-import { saveGame } from '../../utils/storage'
+import { DIFFICULTY_CONFIG } from '../../constants'
 import HUD from './HUD'
 import ProgressBar from './ProgressBar'
 import CardGrid from './CardGrid'
@@ -8,10 +8,15 @@ import PauseMenu from './PauseMenu'
 import styles from './GameBoard.module.css'
 
 export default function GameBoard({ state, dispatch, play, isFullscreen, toggleFullscreen }) {
-  const { cards, difficulty, flippedIds, isEvaluating, isPaused, pairsFound, totalPairs, players, activePlayer } = state
+  const { cards, difficulty, flippedIds, isEvaluating, isPaused, pairsFound, totalPairs, players, activePlayer, elapsedSeconds } = state
+  const { countdown } = DIFFICULTY_CONFIG[difficulty]
 
-  // Auto-save
-  useEffect(() => { saveGame(state) }, [state])
+  // Hard mode: time's up → navigate home
+  useEffect(() => {
+    if (countdown !== null && elapsedSeconds >= countdown) {
+      dispatch({ type: 'NAVIGATE', screen: 'home' })
+    }
+  }, [elapsedSeconds, countdown])
 
   // Resolve non-matching pair after 1 second
   useEffect(() => {

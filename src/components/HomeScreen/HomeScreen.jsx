@@ -9,11 +9,15 @@ function formatTime(s) {
 
 export default function HomeScreen({ dispatch }) {
   const [savedGame, setSavedGame] = useState(null)
-  const [bestEasy, setBestEasy] = useState(null)
+  const [scores, setScores] = useState({})
 
   useEffect(() => {
     setSavedGame(loadGame())
-    setBestEasy(loadHighScore('easy'))
+    setScores({
+      easy:   loadHighScore('easy'),
+      medium: loadHighScore('medium'),
+      hard:   loadHighScore('hard'),
+    })
   }, [])
 
   function resumeGame() {
@@ -24,6 +28,8 @@ export default function HomeScreen({ dispatch }) {
     clearGame()
     setSavedGame(null)
   }
+
+  const scoreLabels = { easy: 'Easy', medium: 'Medium', hard: 'Hard' }
 
   return (
     <div className={styles.screen}>
@@ -56,10 +62,16 @@ export default function HomeScreen({ dispatch }) {
         👥 2 Players
       </button>
 
-      {bestEasy && (
-        <p className={styles.bestScore}>
-          🏆 Best (Easy): {bestEasy.moves} moves · {formatTime(bestEasy.seconds)}
-        </p>
+      {Object.entries(scoreLabels).some(([k]) => scores[k]) && (
+        <div className={styles.bestScores}>
+          {Object.entries(scoreLabels).map(([key, label]) =>
+            scores[key] ? (
+              <p key={key} className={styles.bestScore}>
+                🏆 {label}: {scores[key].moves} moves · {formatTime(scores[key].seconds)}
+              </p>
+            ) : null
+          )}
+        </div>
       )}
     </div>
   )

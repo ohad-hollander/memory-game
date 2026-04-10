@@ -23,8 +23,11 @@ export function clearGame() {
 export function saveHighScore(difficulty, score) {
   try {
     const all = JSON.parse(localStorage.getItem(SCORE_KEY) || '{}')
-    all[difficulty] = score
-    localStorage.setItem(SCORE_KEY, JSON.stringify(all))
+    const existing = all[difficulty]
+    if (!existing || score.moves < existing.moves) {
+      all[difficulty] = score
+      localStorage.setItem(SCORE_KEY, JSON.stringify(all))
+    }
   } catch (_) {}
 }
 
