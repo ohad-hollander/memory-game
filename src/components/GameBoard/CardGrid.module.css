@@ -13,3 +13,8 @@
 @media (max-width: 480px) {
   .cols6 { gap: 5px; }
 }
+
+@media (max-width: 360px) {
+  .cols6 { gap: 4px; }
+  .cols4 { gap: 5px; }
+}
