@@ -34,7 +34,7 @@ export default function HomeScreen({ dispatch }) {
   return (
     <div className={styles.screen}>
       <div className={styles.emoji}>🌸</div>
-      <h1 className={styles.title}>Memory</h1>
+      <h1 className={styles.title}>The Hollander's<br />Memory Game</h1>
       <p className={styles.subtitle}>Find all the matching pairs!</p>
 
       <div className={styles.cardPreview}>
